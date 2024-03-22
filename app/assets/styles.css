@@ -1,0 +1,11 @@
+div.multi-dropdown > div > div {
+    padding-bottom: 4px;
+}
+
+.tab:not(.tab--selected):hover,
+.button:hover
+{ background-color: #ededed !important; }
+
+.tab:not(.tab--selected):active,
+.button:active
+{ background-color: #eaeaea !important; }

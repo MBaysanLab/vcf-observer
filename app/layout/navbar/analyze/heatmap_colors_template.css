@@ -1,0 +1,7 @@
+div#_/*dropdown_class_name*/ > div > div > div > div > div > div > div:nth-child(0/*nth-child*/),
+div.dropdown-color-/*color_name*/ > div > div > div {
+    background-image: none/*background-image*/;
+    color: black/*color*/ !important;
+}
+div.dropdown-color-/*color_name*/ > div > div > div > span
+{ color: black/*color*/ !important; }
