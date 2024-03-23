@@ -24,8 +24,7 @@ def multi_upload(id_value, preloaded_files=(None, None)):
         dcc.Upload(
             id=id_value,
             children=html.Div([
-                'Drag and Drop or ',
-                html.A('Select Files', className='link-primary', href='#!')
+                'Upload all files for this category together'
             ]),
             multiple=True,
             style={
