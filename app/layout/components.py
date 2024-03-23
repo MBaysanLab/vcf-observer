@@ -48,6 +48,7 @@ def font_size_selector(id_value, default_value=12, div_id=''):
                 placeholder=default_value,
                 value=default_value,
                 style={
+                    'maxWidth': '5em',
                     'marginLeft': '1em',
                     'paddingBottom': '3px',
                     'float': 'right',
