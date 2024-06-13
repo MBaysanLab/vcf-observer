@@ -28,6 +28,8 @@ from layout import ids
     State(ids.navbar_analyze_analyze__filter_pass__checklist, 'value'),
     State(ids.navbar_analyze_analyze__genomic_regions__dropdown, 'value'),
     State(ids.navbar_analyze_analyze__inside_outside_regions__radio_items, 'value'),
+    State(ids.navbar_analyze_analyze__on_chromosome__dropdown, 'value'),
+    State(ids.navbar_analyze_analyze__variant_type__dropdown, 'value'),
 
     State(ids.navbar_upload__compare_set_valid__store, 'data'),
     State(ids.navbar_upload__metadata_valid__store, 'data'),
@@ -36,7 +38,7 @@ from layout import ids
 def on_request_venn(
         n_clicks, session_id,
         grouping_columns, grouping_method, prefer_pseudovenn, font_size,
-        filter_options, genomic_regions, inside_outside_regions,
+        filter_options, genomic_regions, inside_outside_regions, on_chromosome, variant_type,
         compare_set_valid, metadata_valid, regions_valid,
 ):
     grouping_columns = normalize_dropdown_value(grouping_columns)
@@ -63,6 +65,8 @@ def on_request_venn(
         filter_options=filter_options,
         genomic_regions=genomic_regions,
         inside_outside_regions=inside_outside_regions,
+        on_chromosome=on_chromosome,
+        variant_type=variant_type,
     )
 
     results += notices

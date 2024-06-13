@@ -3,6 +3,7 @@ import os
 from dash import dcc, html
 
 import config
+import data.file_readers
 from layout.navbar.analyze.venn import venn_options
 from layout.navbar.analyze.clustergram import clustergram_options
 from layout.navbar.analyze.prerec import prerec_options
@@ -70,6 +71,23 @@ analyze_tab = (
                         'outside_regions': ' Outside of regions',
                     },
                     value='inside_regions',
+                ),
+                dcc.Dropdown(
+                    id=ids.navbar_analyze_analyze__on_chromosome__dropdown,
+                    style=styles.dropdown,
+                    clearable=False,
+                    value='any',
+                    options={
+                        chrom.lower(): f'On chromosome: {chrom.replace("chr", "")}'
+                        for chrom in ['Any'] + data.file_readers.valid_chroms
+                    }
+                ),
+                dcc.Dropdown(
+                    id=ids.navbar_analyze_analyze__variant_type__dropdown,
+                    style=styles.dropdown,
+                    clearable=False,
+                    value='all',
+                    options={'all': 'All variant types', 'snp': 'Only SNPs', 'indel': 'Only indels'}
                 )
             ])
         ])
