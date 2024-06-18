@@ -46,6 +46,10 @@ def venn_diagram(
     title_y = -0.01
     pseudovenn_prefix = ''
 
+    if all(len(s) == 0 for s in sets_dict.values()):
+        sets_dict = {', '.join(sets_dict.keys()): set()}
+        no_of_groups = 1
+
     if no_of_groups == 1:
         _venn1(sets_dict, fontsize=font_size, legend_loc=legend_loc)
 
@@ -111,7 +115,10 @@ def _venn1(a_set: dict, fontsize: float = 8.0, legend_loc: str = 'upper right'):
         label=label
     ))
 
-    ax.text(0, 0, '{:,}'.format(len(a_set[label])) + ' (100.0%)', ha='center', va='center', fontsize=fontsize)
+    set_size = len(a_set[label])
+    set_percentage = 100 if set_size > 0 else 0
+
+    ax.text(0, 0, f'{set_size:,} ({set_percentage:.1f}%)', ha='center', va='center', fontsize=fontsize)
     ax.legend(loc=legend_loc, fontsize=fontsize)
 
     return fig
