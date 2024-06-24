@@ -1,5 +1,6 @@
-from dash import html
+from dash import html, get_asset_url
 
+import dash_app
 from layout import ids, styles
 
 welcome_display = (
@@ -35,9 +36,9 @@ welcome_display = (
             ]),
         ]),
         html.Div(style={'display': 'flex', 'justifyContent': 'center'}, children=[
-            html.Img(src='../../assets/demo-images/demo-venn.png', style=styles.demo_image),
-            html.Img(src='../../assets/demo-images/demo-clustergram.png', style=styles.demo_image),
-            html.Img(src='../../assets/demo-images/demo-prerec.png', style=styles.demo_image),
+            html.Img(src=get_asset_url('demo-images/demo-venn.png'), style=styles.demo_image),
+            html.Img(src=get_asset_url('demo-images/demo-clustergram.png'), style=styles.demo_image),
+            html.Img(src=get_asset_url('demo-images/demo-prerec.png'), style=styles.demo_image),
         ]),
     ])
 )
