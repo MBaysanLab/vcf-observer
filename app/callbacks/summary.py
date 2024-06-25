@@ -4,7 +4,8 @@ from dash.dependencies import Input, Output, State
 
 from dash_app import app
 from callbacks.helpers import normalize_dropdown_value, placeholder
-from data.retrieval import get_uploaded_data, read_local_bed_files
+from data.retrieval import get_uploaded_data
+from data.file_readers import read_local_bed_files
 from data.cache import set_filename_download_cache, set_metadata_download_cache, set_raw_download_cache
 from figures.histogram import histogram
 from figures.tables import df_to_table, df_to_csv, grouped_variant_counts
@@ -53,6 +54,8 @@ def on_all_select(all_selection):
     State(ids.navbar_analyze_analyze__filter_pass__checklist, 'value'),
     State(ids.navbar_analyze_analyze__genomic_regions__dropdown, 'value'),
     State(ids.navbar_analyze_analyze__inside_outside_regions__radio_items, 'value'),
+    State(ids.navbar_analyze_analyze__on_chromosome__dropdown, 'value'),
+    State(ids.navbar_analyze_analyze__variant_type__dropdown, 'value'),
 
     State(ids.navbar_upload__compare_set_valid__store, 'data'),
     State(ids.navbar_upload__golden_set_valid__store, 'data'),
@@ -61,7 +64,7 @@ def on_all_select(all_selection):
 def on_request_filename_summary(
         n_clicks, session_id,
         set_selection, visualisation_selection, font_size,
-        filter_options, genomic_regions, inside_outside_regions,
+        filter_options, genomic_regions, inside_outside_regions, on_chromosome, variant_type,
         compare_set_valid, golden_set_valid, regions_valid
 ):
     results = []
@@ -83,6 +86,8 @@ def on_request_filename_summary(
             filter_options=filter_options,
             genomic_regions=genomic_regions,
             inside_outside_regions=inside_outside_regions,
+            on_chromosome=on_chromosome,
+            variant_type=variant_type,
         )
 
     if set_selection == 'golden_set':
@@ -154,6 +159,8 @@ def on_request_filename_summary(
     State(ids.navbar_analyze_analyze__filter_pass__checklist, 'value'),
     State(ids.navbar_analyze_analyze__genomic_regions__dropdown, 'value'),
     State(ids.navbar_analyze_analyze__inside_outside_regions__radio_items, 'value'),
+    State(ids.navbar_analyze_analyze__on_chromosome__dropdown, 'value'),
+    State(ids.navbar_analyze_analyze__variant_type__dropdown, 'value'),
 
     State(ids.navbar_upload__compare_set_valid__store, 'data'),
     State(ids.navbar_upload__metadata_valid__store, 'data'),
@@ -163,7 +170,7 @@ def on_request_metadata_summary(
         n_clicks, session_id,
         grouping_column_options, group_for_each,
         grouping_columns, grouping_method, pivoting_columns,
-        filter_options, genomic_regions, inside_outside_regions,
+        filter_options, genomic_regions, inside_outside_regions, on_chromosome, variant_type,
         compare_set_valid, metadata_valid, regions_valid,
 ):
     grouping_column_options = normalize_dropdown_value(grouping_column_options)
@@ -192,6 +199,8 @@ def on_request_metadata_summary(
             filter_options=filter_options,
             genomic_regions=genomic_regions,
             inside_outside_regions=inside_outside_regions,
+            on_chromosome=on_chromosome,
+            variant_type=variant_type,
         )
 
     results += notices
@@ -234,6 +243,8 @@ def on_request_metadata_summary(
     State(ids.navbar_analyze_analyze__filter_pass__checklist, 'value'),
     State(ids.navbar_analyze_analyze__genomic_regions__dropdown, 'value'),
     State(ids.navbar_analyze_analyze__inside_outside_regions__radio_items, 'value'),
+    State(ids.navbar_analyze_analyze__on_chromosome__dropdown, 'value'),
+    State(ids.navbar_analyze_analyze__variant_type__dropdown, 'value'),
 
     State(ids.navbar_upload__compare_set_valid__store, 'data'),
     State(ids.navbar_upload__golden_set_valid__store, 'data'),
@@ -242,7 +253,7 @@ def on_request_metadata_summary(
 )
 def on_request_raw_summary(
         n_clicks, session_id, set_selection,
-        filter_options, genomic_regions, inside_outside_regions,
+        filter_options, genomic_regions, inside_outside_regions, on_chromosome, variant_type,
         compare_set_valid, golden_set_valid, metadata_valid, regions_valid,
 ):
     results = []
@@ -266,6 +277,8 @@ def on_request_raw_summary(
             filter_options=filter_options,
             genomic_regions=genomic_regions,
             inside_outside_regions=inside_outside_regions,
+            on_chromosome=on_chromosome,
+            variant_type=variant_type,
         )
         if data is not None and data.groupby('FILENAME').ngroups > 1:
             merge_reminder = html.P('All uploaded VCFs have been merged into a single table.')

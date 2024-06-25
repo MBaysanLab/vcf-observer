@@ -1,10 +1,11 @@
-from dash import dcc, html
+from dash import dcc, html, get_asset_url
 import dash_bootstrap_components as dbc
 
 from layout.navbar.welcome import welcome_tab
 from layout.navbar.upload import upload_tab
 from layout.navbar.analyze.analyze import analyze_tab
 
+import dash_app
 from layout import ids, styles
 
 navbar = (
@@ -31,7 +32,7 @@ navbar = (
                     'marginBottom': '0px',
                 },
                 children=[
-                    html.Img(src='../../assets/logo.png', style={
+                    html.Img(src=get_asset_url('logo.png'), style={
                         'height': '36px',
                         'width': '36px',
                         'marginRight': '0.4em',

@@ -282,7 +282,10 @@ def generate_golden_set_summary_card(golden_set: pd.DataFrame, e: Exception = No
 
     if golden_set is None:
         status = 'Not uploaded.'
-        filenames = ['> Required for benchmarking.']
+        filenames = [
+            '> Required for benchmarking.',
+            '> Precision and recall are calculated based on exact matches of variants.',
+        ]
         counts = []
     else:
         files = golden_set.groupby('FILENAME').size().sort_values(ascending=False)

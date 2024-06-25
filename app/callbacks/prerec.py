@@ -25,6 +25,8 @@ from layout import ids
     State(ids.navbar_analyze_analyze__filter_pass__checklist, 'value'),
     State(ids.navbar_analyze_analyze__genomic_regions__dropdown, 'value'),
     State(ids.navbar_analyze_analyze__inside_outside_regions__radio_items, 'value'),
+    State(ids.navbar_analyze_analyze__on_chromosome__dropdown, 'value'),
+    State(ids.navbar_analyze_analyze__variant_type__dropdown, 'value'),
 
     State(ids.navbar_upload__compare_set_valid__store, 'data'),
     State(ids.navbar_upload__golden_set_valid__store, 'data'),
@@ -35,7 +37,7 @@ def on_request_prerec(
         n_clicks, session_id,
         grouping_columns, grouping_method,
         labeling_columns, coloring_columns, shaping_columns, font_size,
-        filter_options, genomic_regions, inside_outside_regions,
+        filter_options, genomic_regions, inside_outside_regions, on_chromosome, variant_type,
         compare_set_valid, golden_set_valid, metadata_valid, regions_valid,
 ):
     grouping_columns = normalize_dropdown_value(grouping_columns)
@@ -64,6 +66,8 @@ def on_request_prerec(
             filter_options=filter_options,
             genomic_regions=genomic_regions,
             inside_outside_regions=inside_outside_regions,
+            on_chromosome=on_chromosome,
+            variant_type=variant_type,
     )
 
     results += notices

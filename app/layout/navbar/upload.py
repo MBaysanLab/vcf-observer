@@ -24,7 +24,7 @@ def multi_upload(id_value, preloaded_files=(None, None)):
         dcc.Upload(
             id=id_value,
             children=html.Div([
-                'Upload all files for this category together'
+                'Upload all files together'
             ]),
             multiple=True,
             style={
@@ -63,6 +63,8 @@ upload_tab = (
         upload_label('Genomic Regions'),
         multi_upload(ids.navbar_upload__regions__upload, preloaded_files=test_files(config.test_files_directory, config.regions_test_files)),
         upload_result(ids.navbar_upload__regions_upload_result__div),
+
+        html.Div('*Max size per file: 200 MB', style={'fontSize': '0.8em', 'fontStyle': 'italic', 'paddingTOp': '1em'}),
 
         dcc.Store(id=ids.navbar_upload__compare_set_valid__store, data='compare_set_is_invalid'),
         dcc.Store(id=ids.navbar_upload__golden_set_valid__store, data='golden_set_is_invalid'),

@@ -41,7 +41,7 @@ def font_size_selector(id_value, default_value=12, div_id=''):
             'height': 'fit-contents',
         },
         children=[
-            html.H6('Font Size', style={'display': 'inline-block', 'marginTop': '6px'}),
+            html.H6('Font Size:', style={'display': 'inline-block', 'marginTop': '6px'}),
             dcc.Input(
                 id=id_value,
                 type='number',
