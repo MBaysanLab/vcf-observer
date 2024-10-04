@@ -53,8 +53,9 @@ def read_vcfs(files: list) -> pd.DataFrame:
 
     # Normalise chromosome names
     chroms = concat_vcfs['CHROM'].values
-    normalised_chroms = [extract_chrom(chrom) for chrom in chroms]
-    concat_vcfs['CHROM'] = pd.Categorical(values=normalised_chroms, categories=valid_chroms+['null_chr'])
+    normalised_chroms = [prepend_chr(chrom) for chrom in chroms]
+    nonstandard_chroms = list(set(normalised_chroms).difference(standard_chroms))
+    concat_vcfs['CHROM'] = pd.Categorical(values=normalised_chroms, categories=standard_chroms + nonstandard_chroms + ['null_chr'])
 
     # Generate key
     vals = concat_vcfs[['CHROM', 'POS', 'REF', 'ALT']].values
@@ -69,8 +70,8 @@ def read_vcfs(files: list) -> pd.DataFrame:
     )
 
 
-valid_chroms = [f'chr{i}' for i in range(1, 22 + 1)]
-valid_chroms += ['chrX',
+standard_chroms = [f'chr{i}' for i in range(1, 22 + 1)]
+standard_chroms += ['chrX',
                  'chrY',
                  'chrW',
                  'chrZ',
@@ -78,14 +79,20 @@ valid_chroms += ['chrX',
 
 
 def extract_chrom(chrom_string: str) -> str:
-    if chrom_string in valid_chroms:
+    if chrom_string in standard_chroms:
         return chrom_string
 
-    for valid_chrom in valid_chroms:
+    for valid_chrom in standard_chroms:
         if valid_chrom in chrom_string:
             return valid_chrom
 
     return 'null_chr'
+
+
+def prepend_chr(chrom: str) -> str:
+    if chrom.isdigit():
+        return 'chr' + chrom
+    return chrom
 
 
 def read_b64_vcf_files(filenames: list, b64_file_contents: list) -> pd.DataFrame:
