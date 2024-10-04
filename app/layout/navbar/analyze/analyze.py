@@ -79,7 +79,7 @@ analyze_tab = (
                     value='any',
                     options={
                         chrom.lower(): f'On chromosome: {chrom.replace("chr", "")}'
-                        for chrom in ['Any'] + data.file_readers.valid_chroms
+                        for chrom in ['Any'] + data.file_readers.standard_chroms
                     }
                 ),
                 dcc.Dropdown(
